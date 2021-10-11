@@ -19,22 +19,22 @@ int WINAPI WinMain(HINSTANCE hInst, // дескриптор экземпляра
     MSG msg; // создём экземпляр структуры MSG для обработки сообщений
     WNDCLASSEX wc; // создаём экземпляр, для обращения к членам класса WNDCLASSEXN
     wc.cbSize = sizeof(wc); // размер структуры (в байтах)
-    wc.style = NULL; // стиль класса окошка
+    wc.style = 0; // стиль класса окошка
     wc.lpfnWndProc = WndProc; // указатель на пользовательскую функцию
-    wc.lpszMenuName = NULL; // указатель на имя меню (у нас его нет)
+    wc.lpszMenuName = 0; // указатель на имя меню (у нас его нет)
     wc.lpszClassName = szClassName; // указатель на имя класса
-    wc.cbWndExtra = NULL; // число освобождаемых байтов в конце структуры
-    wc.cbClsExtra = NULL; // число освобождаемых байтов при создании экземпляра приложения
-    wc.hIcon = LoadIcon(NULL, IDI_HAND); // декриптор пиктограммы
-    wc.hIconSm = LoadIcon(NULL, IDI_HAND); // дескриптор маленькой пиктограммы (в трэе)
-    wc.hCursor = LoadCursor(NULL, IDC_CROSS); // дескриптор курсора
+    wc.cbWndExtra = 0; // число освобождаемых байтов в конце структуры
+    wc.cbClsExtra = 0; // число освобождаемых байтов при создании экземпляра приложения
+    wc.hIcon = LoadIcon(0, IDI_HAND); // декриптор пиктограммы
+    wc.hIconSm = LoadIcon(0, IDI_HAND); // дескриптор маленькой пиктограммы (в трэе)
+    wc.hCursor = LoadCursor(0, IDC_CROSS); // дескриптор курсора
     wc.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH); // дескриптор кисти для закраски фона окна
     wc.hInstance = hInst; // указатель на строку, содержащую имя меню, применяемого для класса
     if (!RegisterClassEx(&wc)) {
         // в случае отсутствия регистрации класса:
-        MessageBox(NULL, L"Can't register class", L"Error!", MB_OK);
+        MessageBox(0, L"Can't register class", L"Error!", MB_OK);
 
-        return NULL;
+        return 0;
     }
     // Определение коор-т центра экрана
     HDC screenDC;
@@ -58,19 +58,19 @@ int WINAPI WinMain(HINSTANCE hInst, // дескриптор экземпляра
         screenY_center - windowY_size / 2, // позиция окна по центру OY
         windowX_size, // ширина окна
         windowY_size, // высота окна
-        (HWND)NULL, // дескриптор родительского окна
-        NULL, // дескриптор меню
+        (HWND)0, // дескриптор родительского окна
+        0, // дескриптор меню
         HINSTANCE(hInst), // дескриптор экземпляра приложения
-        NULL); // ничего не передаём из WndProc
+        0); // ничего не передаём из WndProc
     if (!hMainWnd) { // в случае некорректного создания окна:
        
-        MessageBox(NULL, L"Can't create the window", L"Error!", MB_OK);
+        MessageBox(0, L"Can't create the window", L"Error!", MB_OK);
        
-        return NULL;
+        return 0;
     }
     ShowWindow(hMainWnd, nCmdShow); // отображаем окошко
     UpdateWindow(hMainWnd); // обновляем окошко
-    while (GetMessage(&msg, NULL, NULL, NULL)) { // извлекаем сообщения из очереди, посылаемые фу-циями, ОС
+    while (GetMessage(&msg, 0, 0, 0)) { // извлекаем сообщения из очереди, посылаемые фу-циями, ОС
         TranslateMessage(&msg); // интерпретируем сообщения
         DispatchMessage(&msg); // передаём сообщения обратно ОС
     }
@@ -100,22 +100,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
         SelectObject(hdc, pen_coord_sys);
 
-        MoveToEx(hdc, 30, windowY_size / 2 - 20, NULL); // ось OX
+        MoveToEx(hdc, 30, windowY_size / 2 - 20, 0); // ось OX
         LineTo(hdc, windowX_size - 50, windowY_size / 2 - 20);
 
-        MoveToEx(hdc, windowX_size - 50, windowY_size / 2 - 20, NULL); // верхняя часть стрелки OX
+        MoveToEx(hdc, windowX_size - 50, windowY_size / 2 - 20, 0); // верхняя часть стрелки OX
         LineTo(hdc, windowX_size - 60, windowY_size / 2 - 25);
 
-        MoveToEx(hdc, windowX_size - 50, windowY_size / 2 - 20, NULL); // нижняя часть стрелки OX
+        MoveToEx(hdc, windowX_size - 50, windowY_size / 2 - 20, 0); // нижняя часть стрелки OX
         LineTo(hdc, windowX_size - 60, windowY_size / 2 - 15);
 
-        MoveToEx(hdc, windowX_size / 2 - 10, 80, NULL); // ось OY
+        MoveToEx(hdc, windowX_size / 2 - 10, 80, 0); // ось OY
         LineTo(hdc, windowX_size / 2 - 10, windowY_size - 140);
 
-        MoveToEx(hdc, windowX_size / 2 - 10, 80, NULL); // левая часть стрелки OY
+        MoveToEx(hdc, windowX_size / 2 - 10, 80, 0); // левая часть стрелки OY
         LineTo(hdc, windowX_size / 2 - 15, 90);
 
-        MoveToEx(hdc, windowX_size / 2 - 10, 80, NULL); // правая часть стрелки OY
+        MoveToEx(hdc, windowX_size / 2 - 10, 80, 0); // правая часть стрелки OY
         LineTo(hdc, windowX_size / 2 - 5, 90);
 
         SetTextColor(hdc, RGB(0, 0, 0)); // устанавливаем цвет контекстного устройства
@@ -126,38 +126,36 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         SelectObject(hdc, pen_graph);
 
         for (float x = -14.0f; x <= 14.0f; x += 0.001f) { // груфик синусоиды
-            MoveToEx(hdc, 15 * x + 240, -15 * sin(x) + 230, NULL);
+            MoveToEx(hdc, 15 * x + 240, -15 * sin(x) + 230, 0);
             LineTo(hdc, 15 * x + 240, -15 * sin(x) + 230);
         }
 
         EndPaint(hWnd, &ps);
         break;
     case WM_DESTROY:
-        PostQuitMessage(NULL);
+        PostQuitMessage(0);
         break;
     default:
         return DefWindowProc(hWnd, uMsg, wParam, lParam);
     }
-    return NULL;
+    return 0;
 }
 
 //HWND hWnd = GetConsoleWindow();
 //HDC hDC = GetDC(hWnd);
 //HPEN Pen = CreatePen(PS_SOLID, 2, RGB(255, 255, 255));
 //SelectObject(hDC, Pen);
-//MoveToEx(hDC, 0, 85, NULL);
+//MoveToEx(hDC, 0, 85, 0);
 //LineTo(hDC, 200, 85);
-//MoveToEx(hDC, 100, 0, NULL);
+//MoveToEx(hDC, 100, 0, 0);
 //LineTo(hDC, 100, 170);
 //for (float x = -8.0f; x <= 8.0f; x += 0.01f) // O(100,85) - center
 //{
-//    MoveToEx(hDC, 10 * x + 100, -10 * sin(x) + 85, NULL);//10 - scale
+//    MoveToEx(hDC, 10 * x + 100, -10 * sin(x) + 85, 0);//10 - scale
 //    LineTo(hDC, 10 * x + 100, -10 * sin(x) + 85);
 //}
 //system("pause");
 //ReleaseDC(hWnd, hDC);
-
-
 
 //#ifndef UNICODE
 //#define UNICODE
@@ -193,13 +191,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 //        // Size and position
 //        CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
 //
-//        NULL,       // Parent window    
-//        NULL,       // Menu
+//        0,       // Parent window    
+//        0,       // Menu
 //        hInstance,  // Instance handle
-//        NULL        // Additional application data
+//        0        // Additional application data
 //    );
 //
-//    if (hwnd == NULL)
+//    if (hwnd == 0)
 //    {
 //        return 0;
 //    }
@@ -209,7 +207,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 //    // Run the message loop.
 //
 //    MSG msg;
-//    while (GetMessage(&msg, NULL, 0, 0))
+//    while (GetMessage(&msg, 0, 0, 0))
 //    {
 //        TranslateMessage(&msg);
 //        DispatchMessage(&msg);
